@@ -11,6 +11,7 @@ unsigned long __stdcall increase(void* p) {
     while (i < n) {
         WaitForSingleObject(mutex, INFINITE);
         critical_int += 1;
+        ReleaseMutex(mutex);
         i++;
     }
     return 0;
@@ -22,6 +23,7 @@ DWORD CALLBACK decrease(LPVOID p) {
     while (i < n) {
         WaitForSingleObject(mutex, INFINITE);
         critical_int -= 1;
+        ReleaseMutex(mutex);
         i++;
     }
     return 0;
@@ -50,5 +52,6 @@ int main(void) {
     CloseHandle(mutex);
 
     printf("%d\n", critical_int);
+
     return 0;
 }
