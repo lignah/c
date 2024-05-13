@@ -6,7 +6,6 @@
 #define row 10		// strlen(data)
 
 typedef struct {
-
 	char data[column][row];
 	//char* data[column]; //array of pointers
 	char top;
@@ -15,7 +14,6 @@ typedef struct {
 Stack* stack;
 
 void push(char* s) {
-
 	if (stack->top == column - 1) {
 		puts("stack is full");
 		return;
@@ -26,7 +24,6 @@ void push(char* s) {
 }
 
 void pop() {
-
 	if (stack->top == -1) {
 		printf("stack is empty\12");
 		return;
@@ -35,7 +32,6 @@ void pop() {
 }
 
 void print_stack() {
-
 	if (stack->top == -1) {
 		printf("stack is empty\12");
 		return;
