@@ -1,65 +1,86 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-#define STACK_SIZE 5
+#define data_max 4
 
 typedef struct {
-	int data[STACK_SIZE];
-	ptrdiff_t top; // data[top]
-} Stack;
+	int data[data_max];
+	char top;
+} stack;
 
-void push(Stack* stack, int d) {
-	if (stack->top == STACK_SIZE - 1) {
-		puts("stack is full");
-		return;
+stack* s;
+
+void init() {
+	s = malloc(sizeof(stack));
+	if (!s) {
+		puts("malloc failed");
+		return ;
 	}
-	stack->top++;
-	stack->data[stack->top] = d;
+	s->top = -1;
 }
 
-void pop(Stack* stack) {
-	if (stack->top == -1) {
-		printf("stack is empty\12");
-		return;
+void push(int data) {
+	if (s->top == data_max - 1) {
+		puts("\12\t\tbuffer overflow");
+		return ;
 	}
-	stack->data[stack->top];
-	stack->top--;
+	s->data[++s->top] = data;
 }
 
-void print_stack(Stack* stack) {
-	if (stack->top == -1) {
-		printf("stack is empty\12");
-		return;
+void pop() {
+	if (s->top == -1) {
+		puts("\12\t\tbuffer underflow");
+		return ;
 	}
-	printf("stack:\n\12");
+	(s->top)--;
+}
 
-	while (stack->top != -1) {
-		printf("%d\12", stack->data[stack->top]);
-		stack->top--;
+void printing() {
+	char top = s->top;
+	puts("");
+	while (top != -1) {
+		printf("\t\tstack: %d\12", s->data[top]);
+		(top)--;
 	}
 }
 
-void main(void) {
+void main() {
 
-	Stack stack = { {0},-1 };
+	int select, value;
+	init();
+	while (1) {
+		system("cls");
+		printf("\12\12\t\t*** stack with array ***\12\12");
+		printf("\t\t1.push    2.pop    3.print    4.clear    5.exit");
+		printf("\12\t\tselect : [ ]\b\b");
+		scanf_s("%d", &select);
 
-	push(&stack, 1);
-	pop(&stack);
-	push(&stack, 2);
-	push(&stack, 3);
-	push(&stack, 4);
-	push(&stack, 5);
-	push(&stack, 6);
-	push(&stack, 7);
+		while (getchar() != '\n');
 
-	print_stack(&stack);
+		switch (select) {
+			case 1:
+				printf("\12\12\t\tpush : ");
+				scanf_s("%d", &value);
+				push(value);
+				break;
+
+			case 2:
+				pop();
+				break;
+
+			case 3:
+				printing();
+				break;
+
+			case 4:
+				init();
+				break;
+
+			case 5:
+				exit(0);
+		}
+		printf("\12\12\t\t");
+		system("pause");
+	}
+	free(s);
 }
-/* stack is full
- * stack:
- *
- * 6
- * 5
- * 4
- * 3
- * 2
- 
-*/
