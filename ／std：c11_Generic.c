@@ -1,18 +1,18 @@
 /* compile, ISO/IEC 9899:2011 */
 #include <stdio.h>
 
-#define print(x) _Generic((x),					\
-    int: printf("int: %d\n", (int)x),			\
-    float: printf("float: %f\n", (float)x),		\
+#define print(x) _Generic((x),			\
+    int: printf("int: %d\n", (int)x),		\
+    float: printf("float: %f\n", (float)x),	\
     double: printf("double: %lf\n", (double)x)) \
 
-#define type_name(x) _Generic((x),				\
-    int: "int",									\
-    char: "char",								\
-    float: "float",								\
-    double: "double",							\
-	unsigned long long: "unsigned long long",	\
-    default: "unknown")							\
+#define type_name(x) _Generic((x),		\
+    int: "int",					\
+    char: "char",				\
+    float: "float",				\
+    double: "double",				\
+    unsigned long long: "unsigned long long",	\
+    default: "unknown")				\
 
 void main() {
 
