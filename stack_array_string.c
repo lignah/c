@@ -1,67 +1,82 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
-#define column 100
-#define row 40
+#define column 20	// count of element
+#define row 10		// strlen(data)
 
 typedef struct {
+
 	char data[column][row];
-	char top; // data[top][ ]
+	//char* data[column]; //array of pointers
+	char top;
 } Stack;
 
-void push(Stack* stack, char* s) {
+Stack* stack;
+
+void push(char* s) {
+
 	if (stack->top == column - 1) {
 		puts("stack is full");
 		return;
 	}
 	stack->top++;
 	strcpy_s(stack->data[stack->top], sizeof(stack->data[stack->top]), s);
+	//stack->data[stack->top] = s; //array of pointers
 }
 
-void pop(Stack* stack) {
+void pop() {
+
 	if (stack->top == -1) {
 		printf("stack is empty\12");
 		return;
 	}
-	stack->data[stack->top];
 	stack->top--;
 }
 
-void print_stack(Stack* stack) {
+void print_stack() {
+
 	if (stack->top == -1) {
 		printf("stack is empty\12");
 		return;
 	}
-	printf("stack:\n\12");
-
-	while (stack->top != -1) {
-		printf("%s\12", stack->data[stack->top]);
-		stack->top--;
+	printf("stack:\12\12");
+	
+	char top = stack->top;
+	while (top != -1) {
+		printf("%s\12", stack->data[top]);
+		top--;
 	}
 }
 
-void main(void) {
+void main() {
 
-	Stack stack = { {0},-1 };
+	stack = malloc(sizeof(Stack));
+	if(!stack) return;
+	stack->top = -1;
 
-	push(&stack, "This is about the abstract concept.");
-	push(&stack, "Additionally,");
-	push(&stack, "a peek operation can");
-	push(&stack, ", without modifying the stack,");
-	push(&stack, "return the value ");
-	push(&stack, "of the last element added.");
-	push(&stack, " LIFO");
-	pop(&stack);
+	push("stack, 1");
+	push("stack, 2");
+	push("stack, 3");
+	push("stack, 4");
+	push("stack, 5");
+	push("stack, 6");
+	push("stack, 7");
+	push("LIFO   *");
+	pop();
+	++stack->top;
 
-	print_stack(&stack);
+	print_stack();
+
+	free(stack);
 }
 /* stack:
  * 
- * of the last element added.
- * return the value
- * , without modifying the stack,
- * a peek operation can
- * Additionally,
- * This is about the abstract concept.
-
-*/
+ * LIFO   *
+ * stack, 7
+ * stack, 6
+ * stack, 5
+ * stack, 4
+ * stack, 3
+ * stack, 2
+ * stack, 1 */
